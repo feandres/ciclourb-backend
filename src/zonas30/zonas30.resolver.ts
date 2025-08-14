@@ -1,19 +1,14 @@
-import { Resolver, Query, Args, Int, Mutation } from '@nestjs/graphql';
+import { Resolver, Query, Args, Int } from '@nestjs/graphql';
 import { Zonas30Service } from './zonas30.service';
-import { Zonas30 } from './entities/zonas30.entity';
+import { Zonas30Model } from './zonas30.model';
 
-@Resolver(() => Zonas30)
+@Resolver(() => Zonas30Model)
 export class Zonas30Resolver {
-  constructor(private readonly service: Zonas30Service) {}
+  constructor(private readonly zonas30Service: Zonas30Service) {}
 
-  @Query(() => [Zonas30])
-  zonas30(): Promise<Zonas30[]> {
-    return this.service.findAll();
-  }
-
-  @Query(() => Zonas30, { nullable: true })
-  zona30(@Args('id', { type: () => Int }) id: number): Promise<Zonas30 | null> {
-    return this.service.findOne(id);
+  @Query(() => [Zonas30Model])
+  zonas30All() {
+    return this.zonas30Service.findAll();
   }
 
 }

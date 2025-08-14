@@ -1,19 +1,18 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import { Zonas30Model } from './zonas30.model';
+import { BicicletarModel } from './bicicletar.model';
 
 @Injectable()
-export class Zonas30Service {
+export class BicicletarService {
   constructor(private readonly dataSource: DataSource) {}
 
-  async findAll(): Promise<Zonas30Model[]> {
+  async findAll(): Promise<BicicletarModel[]> {
     const result = await this.dataSource.query(`
     SELECT
-      fid, name,
+      fid, name, id_estacao, vagas_atuais, ano_inauguracao, bairro, regional, long, lat,
       ST_AsGeoJSON(geom)::json AS geom
-    FROM public.zonas_30;
+    FROM public.bicicletar;
   `);
     return result;
   }
-
 }
