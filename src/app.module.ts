@@ -10,6 +10,9 @@ import { BicicletarModule } from './bicicletar/bicicletar.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { MalhaAtualService } from './malha_atual/malha_atual.service';
+import { MalhaAtualModule } from './malha_atual/malha_atual.module';
+import { MalhaPDCIModule } from './malha_pdci/malha_pdci.module';
 
 @Module({
   imports: [
@@ -36,8 +39,10 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
     ViasModule,
     Zonas30Module,
     BicicletarModule,
+    MalhaAtualModule,
+    MalhaPDCIModule,
   ],
   controllers: [AppController],
-  providers: [AppService, BicicletarService],
+  providers: [AppService, BicicletarService, MalhaAtualService],
 })
 export class AppModule {}

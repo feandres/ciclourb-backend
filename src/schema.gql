@@ -38,8 +38,38 @@ type BicicletarModel {
   geom: JSONObject
 }
 
+type MalhaAtualModel {
+  id: Int!
+  fid: Int
+  via: String
+  pdci: String
+  tipologia: String
+  ano: String
+  extensao: Int
+  geom: JSONObject
+}
+
+type MalhaPDCIModel {
+  id: Int!
+  fid: Int
+  name: String
+  trecho: String
+  tipologia: String
+  sentido: String
+  prazo: String
+  executado: String
+  ano: String
+  dentro_do_prazo: String
+  obs: String
+  extensao: Int
+  extensao_executada: Int
+  geom: JSONObject
+}
+
 type Query {
   viasAll: [ViasModel!]!
   zonas30All: [Zonas30Model!]!
   bicicletarAll: [BicicletarModel!]!
+  malhaAtualAll: [MalhaAtualModel!]!
+  malhaPDCIAll: [MalhaPDCIModel!]!
 }
