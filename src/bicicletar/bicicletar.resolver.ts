@@ -11,4 +11,9 @@ export class BicicletarResolver {
     return this.bicicletarService.findAll();
   }
 
+  @Query(() => Int)
+  totalBicicletarPontos() {
+    return this.bicicletarService.totalPontos();
+  }
+
 }

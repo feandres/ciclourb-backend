@@ -15,4 +15,12 @@ export class BicicletarService {
   `);
     return result;
   }
+
+  async totalPontos (): Promise<number> {
+    const result = await this.dataSource.query(`
+      SELECT COUNT(*) as total FROM public.bicicletar;
+    `);
+
+    return parseInt(result[0].total, 10);
+  }
 }

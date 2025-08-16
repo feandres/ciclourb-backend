@@ -89,7 +89,12 @@ type Query {
   viasAll: [ViasModel!]!
   zonas30All: [Zonas30Model!]!
   bicicletarAll: [BicicletarModel!]!
+  totalBicicletarPontos: Int!
   malhaAtualAll: [MalhaAtualModel!]!
+  malhaAtualTotalKm: Int!
+  malhaAtualEvolucaoAnual: [JSONObject!]!
+  malhaAtualEvolucaoAnualPorTipologia: [JSONObject!]!
+  malhaAtualTotalPorTipologia: [JSONObject!]!
   malhaPDCIAll: [MalhaPDCIModel!]!
   contagemAll: [ContagemModel!]!
 }
