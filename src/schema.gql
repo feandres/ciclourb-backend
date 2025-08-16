@@ -66,10 +66,30 @@ type MalhaPDCIModel {
   geom: JSONObject
 }
 
+type ContagemModel {
+  id: Int!
+  lat: String
+  lon: String
+  lat_lon: String
+  local: String
+  data: String
+  turno: String
+  inicio: String
+  fim: String
+  masculino: String
+  feminino: String
+  total: String
+  ciclistas_por_min: String
+  realizador: String
+  ano: String
+  geom: JSONObject
+}
+
 type Query {
   viasAll: [ViasModel!]!
   zonas30All: [Zonas30Model!]!
   bicicletarAll: [BicicletarModel!]!
   malhaAtualAll: [MalhaAtualModel!]!
   malhaPDCIAll: [MalhaPDCIModel!]!
+  contagemAll: [ContagemModel!]!
 }

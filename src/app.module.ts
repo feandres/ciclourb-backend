@@ -13,6 +13,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { MalhaAtualService } from './malha_atual/malha_atual.service';
 import { MalhaAtualModule } from './malha_atual/malha_atual.module';
 import { MalhaPDCIModule } from './malha_pdci/malha_pdci.module';
+import { ContagemModule } from './contagem/contagem.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { MalhaPDCIModule } from './malha_pdci/malha_pdci.module';
     BicicletarModule,
     MalhaAtualModule,
     MalhaPDCIModule,
+    ContagemModule,
   ],
   controllers: [AppController],
   providers: [AppService, BicicletarService, MalhaAtualService],
