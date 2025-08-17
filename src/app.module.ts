@@ -14,6 +14,7 @@ import { MalhaAtualService } from './malha_atual/malha_atual.service';
 import { MalhaAtualModule } from './malha_atual/malha_atual.module';
 import { MalhaPDCIModule } from './malha_pdci/malha_pdci.module';
 import { ContagemModule } from './contagem/contagem.module';
+import { DadosModule } from './dados/dados.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { ContagemModule } from './contagem/contagem.module';
     MalhaAtualModule,
     MalhaPDCIModule,
     ContagemModule,
+    DadosModule,
   ],
   controllers: [AppController],
   providers: [AppService, BicicletarService, MalhaAtualService],

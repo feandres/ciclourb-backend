@@ -85,6 +85,17 @@ type ContagemModel {
   geom: JSONObject
 }
 
+type IndicadorType {
+  nome: String!
+  unidade: String
+  valor: Int
+}
+
+type SerieHistoricaType {
+  ano: String!
+  valor: Int!
+}
+
 type Query {
   viasAll: [ViasModel!]!
   zonas30All: [Zonas30Model!]!
@@ -92,9 +103,9 @@ type Query {
   totalBicicletarPontos: Int!
   malhaAtualAll: [MalhaAtualModel!]!
   malhaAtualTotalKm: Int!
-  malhaAtualEvolucaoAnual: [JSONObject!]!
-  malhaAtualEvolucaoAnualPorTipologia: [JSONObject!]!
-  malhaAtualTotalPorTipologia: [JSONObject!]!
   malhaPDCIAll: [MalhaPDCIModel!]!
   contagemAll: [ContagemModel!]!
+  dashboardIndicadores: [IndicadorType!]!
+  dashboardEvolucaoMalha: [SerieHistoricaType!]!
+  evolucaoMalhaPorTipologia: [SerieHistoricaType!]!
 }
