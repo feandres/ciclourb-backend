@@ -42,4 +42,17 @@ export class MalhaTotalPorTipologiaType {
   valor: number;
 }
 
+@ObjectType()
+export class MalhaPorTipologiaType {
+  @Field()
+  ano: string;
+
+  @Field()
+  tipologia: string;
+
+  @Field(() => Int)
+  valor: number;
+}
+
+
 

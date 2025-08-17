@@ -90,8 +90,44 @@ export class DadosService {
     ];
   }
 
+  async evolucaoMalhaPorAno(): Promise<{ ano: string; valor: number }[]> {
+    return this.dataSource.query(`
+    SELECT
+      ano,
+      SUM(SUM(extensao)) OVER (ORDER BY ano) AS valor
+    FROM malha_atual
+    GROUP BY ano
+    ORDER BY ano;
+  `);
+  }
 
-
-
-
+  async evolucaoMalhaPorTipologia(): Promise<
+    { ano: string; tipologia: string; valor: number }[]
+  > {
+    return this.dataSource.query(`
+    SELECT
+      ano,
+      CASE
+          WHEN tipologia IN ('Ciclofaixa bidirecional', 'Ciclofaixa unidirecional') THEN 'Ciclofaixa'
+          ELSE tipologia
+      END AS tipologia,
+      SUM(SUM(extensao)) OVER (PARTITION BY
+          CASE
+              WHEN tipologia IN ('Ciclofaixa bidirecional', 'Ciclofaixa unidirecional') THEN 'Ciclofaixa'
+              ELSE tipologia
+          END
+          ORDER BY ano
+      ) AS valor
+    FROM malha_atual
+    WHERE tipologia IN (
+        'Ciclorrota',
+        'Passeio compartilhado',
+        'Ciclofaixa bidirecional',
+        'Ciclofaixa unidirecional',
+        'Ciclovia bidirecional'
+    )
+    GROUP BY ano, tipologia
+    ORDER BY ano, tipologia;
+  `);
+  }
 }

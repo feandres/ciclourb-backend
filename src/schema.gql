@@ -96,6 +96,12 @@ type SerieHistoricaType {
   valor: Int!
 }
 
+type MalhaPorTipologiaType {
+  ano: String!
+  tipologia: String!
+  valor: Int!
+}
+
 type Query {
   viasAll: [ViasModel!]!
   zonas30All: [Zonas30Model!]!
@@ -106,6 +112,6 @@ type Query {
   malhaPDCIAll: [MalhaPDCIModel!]!
   contagemAll: [ContagemModel!]!
   dashboardIndicadores: [IndicadorType!]!
-  dashboardEvolucaoMalha: [SerieHistoricaType!]!
-  evolucaoMalhaPorTipologia: [SerieHistoricaType!]!
+  evolucaoMalhaPorAno: [SerieHistoricaType!]!
+  evolucaoMalhaPorTipologia: [MalhaPorTipologiaType!]!
 }
