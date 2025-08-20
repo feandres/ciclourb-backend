@@ -54,5 +54,42 @@ export class MalhaPorTipologiaType {
   valor: number;
 }
 
+@ObjectType()
+export class QuadroComparativoItemType {
+  @Field()
+  tipologia: string;
+
+  @Field()
+  categoria: string;
+
+  @Field(() => Int)
+  valor: number;
+}
+
+@ObjectType()
+export class ContagemCiclistaType {
+  @Field({ nullable: true })
+  local: string;
+
+  @Field({ nullable: true })
+  data: string;
+
+  @Field({ nullable: true })
+  turno: string;
+
+  @Field({ nullable: true })
+  total: string;
+
+  @Field({ nullable: true })
+  realizador: string;
+
+  @Field({ nullable: true })
+  ano: string;
+
+  @Field({ nullable: true })
+  geom: string;
+}
+
+
 
 

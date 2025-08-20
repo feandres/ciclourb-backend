@@ -19,8 +19,8 @@ export class MalhaAtual {
   @Column({ type: 'text', nullable: true })
   tipologia: string | null;
 
-  @Column({ type: 'text', nullable: true })
-  ano: string | null;
+  @Column({ type: 'numeric', nullable: true })
+  ano: number | null;
 
   @Column({ type: 'numeric', nullable: true })
   extensao: number | null;
