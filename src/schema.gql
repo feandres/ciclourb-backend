@@ -44,7 +44,7 @@ type MalhaAtualModel {
   via: String
   pdci: String
   tipologia: String
-  ano: String
+  ano: Int
   extensao: Int
   geom: JSONObject
 }
@@ -102,6 +102,22 @@ type MalhaPorTipologiaType {
   valor: Int!
 }
 
+type QuadroComparativoItemType {
+  tipologia: String!
+  categoria: String!
+  valor: Int!
+}
+
+type ContagemCiclistaType {
+  local: String
+  data: String
+  turno: String
+  total: String
+  realizador: String
+  ano: String
+  geom: String
+}
+
 type Query {
   viasAll: [ViasModel!]!
   zonas30All: [Zonas30Model!]!
@@ -114,4 +130,6 @@ type Query {
   dashboardIndicadores: [IndicadorType!]!
   evolucaoMalhaPorAno: [SerieHistoricaType!]!
   evolucaoMalhaPorTipologia: [MalhaPorTipologiaType!]!
+  quadroComparativo: [QuadroComparativoItemType!]!
+  contagemCiclistas(page: Int!, limit: Int!, ano: String, turno: String, realizador: String): [ContagemCiclistaType!]!
 }

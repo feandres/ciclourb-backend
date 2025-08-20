@@ -18,8 +18,8 @@ export class MalhaAtualModel {
   @Field({ nullable: true })
   tipologia?: string;
 
-  @Field({ nullable: true })
-  ano?: string;
+  @Field(() => Int, { nullable: true })
+  ano?: number;
 
   @Field(() => Int, { nullable: true })
   extensao?: number;
