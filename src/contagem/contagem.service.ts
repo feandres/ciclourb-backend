@@ -6,14 +6,28 @@ import { ContagemModel } from './contagem.model';
 export class ContagemService {
   constructor(private readonly dataSource: DataSource) {}
 
-  async allContagens(): Promise<{ contagens: ContagemModel[] }[]> {
-    return  this.dataSource.query(`
-      SELECT
-        id, lat, lon, lat_lon, local, data, turno, inicio, fim, masculino, feminino, total, ciclistas_por_min, realizador, ano,
-        ST_AsGeoJSON(geom)::json AS geom
-      FROM public.contagem_ciclistas
-      ORDER BY data DESC;
+  async allContagens(): Promise<any> {
+    const result = await this.dataSource.query(`
+      SELECT jsonb_build_object(
+        'type', 'FeatureCollection',
+        'features', jsonb_agg(
+          jsonb_build_object(
+            'type', 'Feature',
+            'geometry', ST_AsGeoJSON(
+              ST_Transform(
+                -- Converte MultiPoint em Point
+                ST_SetSRID(ST_GeometryN(geom,1), 31984),
+                4326
+              )
+            )::jsonb,
+            'properties', to_jsonb(c) - 'geom'
+          )
+        )
+      ) AS geojson
+      FROM public.contagem_ciclistas c;
     `);
+
+    return result[0].geojson;
   }
 
   async findAll(
@@ -46,7 +60,12 @@ export class ContagemService {
     const dataQuery = `
       SELECT
         id, lat, lon, lat_lon, local, data, turno, inicio, fim, masculino, feminino, total, ciclistas_por_min, realizador, ano,
-        ST_AsGeoJSON(geom)::json AS geom
+        ST_AsGeoJSON(
+          ST_Transform(
+            ST_SetSRID(ST_GeometryN(geom,1), 31984),
+            4326
+          )
+        )::json AS geom
       FROM public.contagem_ciclistas
       ${whereClause}
       ORDER BY data DESC
