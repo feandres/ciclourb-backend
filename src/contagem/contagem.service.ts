@@ -6,6 +6,16 @@ import { ContagemModel } from './contagem.model';
 export class ContagemService {
   constructor(private readonly dataSource: DataSource) {}
 
+  async allContagens(): Promise<{ contagens: ContagemModel[] }[]> {
+    return  this.dataSource.query(`
+      SELECT
+        id, lat, lon, lat_lon, local, data, turno, inicio, fim, masculino, feminino, total, ciclistas_por_min, realizador, ano,
+        ST_AsGeoJSON(geom)::json AS geom
+      FROM public.contagem_ciclistas
+      ORDER BY data DESC;
+    `);
+  }
+
   async findAll(
     page: number,
     limit: number,

@@ -21,4 +21,9 @@ export class ContagemController {
 
     return { data, total, page: pageNum, limit: limitNum };
   }
+
+  @Get("/contagens")
+  async contagensAll() {
+    return this.contagemService.allContagens();
+  }
 }

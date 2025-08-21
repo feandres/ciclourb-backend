@@ -1,5 +1,4 @@
-import { ObjectType, Field, Int, Float } from '@nestjs/graphql';
-import { GraphQLJSONObject } from 'graphql-type-json';
+import { ObjectType, Field, Int } from '@nestjs/graphql';
 
 @ObjectType()
 export class BicicletarModel {
@@ -15,6 +14,9 @@ export class BicicletarModel {
   @Field(() => Int, { nullable: true })
   vagas_atuais?: number;
 
+  @Field({ nullable: true })
+  data_inauguracao?: string;
+
   @Field(() => Int, { nullable: true })
   ano_inauguracao?: number;
 
@@ -24,12 +26,6 @@ export class BicicletarModel {
   @Field({ nullable: true })
   regional?: string;
 
-  @Field(() => Float, { nullable: true })
-  long?: number;
-
-  @Field(() => Float, { nullable: true })
-  lat?: number;
-
-  @Field(() => GraphQLJSONObject, { nullable: true })
-  geom?: any;
+  @Field({ nullable: true })
+  geom?: string;
 }
