@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 import { BicicletarService } from './bicicletar.service';
-import { BicicletarResolver } from './bicicletar.resolver';
+import { BicicletarController } from './bicicletar.controller';
 
 @Module({
-  providers: [BicicletarService, BicicletarResolver],
+  providers: [BicicletarService],
+  controllers: [BicicletarController],
 })
 export class BicicletarModule {}

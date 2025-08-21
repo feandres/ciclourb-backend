@@ -1,16 +1,8 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { ViasModule } from './vias/vias.module';
 import { Zonas30Module } from './zonas30/zonas30.module';
-import { BicicletarService } from './bicicletar/bicicletar.service';
 import { BicicletarModule } from './bicicletar/bicicletar.module';
-import { GraphQLModule } from '@nestjs/graphql';
-import { join } from 'path';
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { MalhaAtualService } from './malha_atual/malha_atual.service';
 import { MalhaAtualModule } from './malha_atual/malha_atual.module';
 import { MalhaPDCIModule } from './malha_pdci/malha_pdci.module';
 import { ContagemModule } from './contagem/contagem.module';
@@ -19,10 +11,6 @@ import { DadosModule } from './dados/dados.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    GraphQLModule.forRoot<ApolloDriverConfig>({
-      driver: ApolloDriver,
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-    }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -38,15 +26,12 @@ import { DadosModule } from './dados/dados.module';
         ssl: { rejectUnauthorized: false }, // Supabase exige SSL
       }),
     }),
-    ViasModule,
     Zonas30Module,
     BicicletarModule,
     MalhaAtualModule,
     MalhaPDCIModule,
     ContagemModule,
     DadosModule,
-  ],
-  controllers: [AppController],
-  providers: [AppService, BicicletarService, MalhaAtualService],
+  ]
 })
 export class AppModule {}

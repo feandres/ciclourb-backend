@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { MalhaAtualService } from './malha_atual.service';
-import { MalhaAtualResolver } from './malha_atual.resolver';
+import { MalhaAtualController } from './malha_atual.controller';
 
 @Module({
-  providers: [MalhaAtualService, MalhaAtualResolver],
+  providers: [MalhaAtualService],
+  controllers: [MalhaAtualController]
 })
 export class MalhaAtualModule {}
 

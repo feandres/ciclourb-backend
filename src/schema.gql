@@ -2,15 +2,9 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type ViasModel {
+type Zonas30Model {
   fid: Int!
-  via: String
-  pdci: Boolean
-  tipologia: String
-  ano: String
-  extensao: Float
-  plano_pdci: String
-  prazo_pdci: String
+  name: String
   geom: JSONObject
 }
 
@@ -18,12 +12,6 @@ type ViasModel {
 The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
 scalar JSONObject
-
-type Zonas30Model {
-  fid: Int!
-  name: String
-  geom: JSONObject
-}
 
 type BicicletarModel {
   fid: Int!
@@ -119,7 +107,6 @@ type ContagemCiclistaType {
 }
 
 type Query {
-  viasAll: [ViasModel!]!
   zonas30All: [Zonas30Model!]!
   bicicletarAll: [BicicletarModel!]!
   totalBicicletarPontos: Int!

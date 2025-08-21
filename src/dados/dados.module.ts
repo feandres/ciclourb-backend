@@ -1,9 +1,10 @@
 // dashboard.module.ts
 import { Module } from '@nestjs/common';
 import { DadosService } from './dados.service';
-import { DadosResolver } from './dados.resolver';
+import { DadosController } from './dados.controller';
 
 @Module({
-  providers: [DadosService, DadosResolver],
+  providers: [DadosService],
+  controllers: [DadosController]
 })
 export class DadosModule {}

@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { MalhaPDCIService } from './malha_pdci.service';
-import { MalhaPDCIResolver } from './malha_pdci.resolver';
+import { MalhaPDCIController } from './malha_pdci.controller';
 
 @Module({
-  providers: [MalhaPDCIService, MalhaPDCIResolver],
+  providers: [MalhaPDCIService],
+  controllers: [MalhaPDCIController]
 })
 export class MalhaPDCIModule {}
 

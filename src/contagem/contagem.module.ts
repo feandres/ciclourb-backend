@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ContagemService } from './contagem.service';
-import { ContagemResolver } from './contagem.resolver';
-
+import { ContagemController } from './contagem.controller';
 @Module({
-  providers: [ContagemService, ContagemResolver],
+  providers: [ContagemService],
+  controllers: [ ContagemController]
 })
 export class ContagemModule {}
