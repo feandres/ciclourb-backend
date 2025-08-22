@@ -1,18 +1,35 @@
-// api/index.ts (ou main.ts se você mantiver src/)
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ExpressAdapter } from '@nestjs/platform-express';
-import express from 'express';
-import serverless from 'serverless-http';
+import express, { Express } from 'express';
 
-const server = express();
+const expressServer: Express = express();
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
+async function createNestServer(expressInstance: Express) {
+  const app = await NestFactory.create(
+    AppModule,
+    new ExpressAdapter(expressInstance),
+  );
+
   app.enableCors();
-  await app.init(); 
+  app.setGlobalPrefix('api'); // opcional: adiciona /api como prefixo
+
+  return app.init();
 }
 
-bootstrap();
+// Para desenvolvimento local
+if (process.env.NODE_ENV !== 'production') {
+  async function bootstrap() {
+    const app = await NestFactory.create(AppModule);
+    app.enableCors();
+    app.setGlobalPrefix('api'); // opcional
+    await app.listen(3000);
+  }
+  bootstrap();
+}
 
-export const handler = serverless(server); 
+// Para produção no Vercel
+createNestServer(expressServer);
+
+// Exporta o servidor express para o Vercel
+export default expressServer;
