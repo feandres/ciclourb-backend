@@ -11,8 +11,9 @@ async function createNestServer(expressInstance: Express) {
     new ExpressAdapter(expressInstance),
   );
 
+  // Teste
   app.enableCors();
-  app.setGlobalPrefix('api'); // opcional: adiciona /api como prefixo
+  app.setGlobalPrefix('api'); 
 
   return app.init();
 }
