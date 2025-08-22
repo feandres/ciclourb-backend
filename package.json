@@ -28,6 +28,7 @@
     "@nestjs/graphql": "^13.1.0",
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/typeorm": "^11.0.0",
+    "@vercel/node": "^5.3.13",
     "apollo-server-express": "^3.13.0",
     "express": "^5.1.0",
     "graphql": "^16.11.0",

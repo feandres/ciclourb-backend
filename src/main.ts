@@ -1,18 +1,29 @@
-import dns from 'dns';
-dns.setDefaultResultOrder('ipv4first');
-
 import { NestFactory } from '@nestjs/core';
+import { ExpressAdapter } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
+import express from 'express'; 
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+const expressServer = express();
 
-  app.enableCors();
+async function createNestServer(expressInstance: express.Express) {
+  const app = await NestFactory.create(
+    AppModule,
+    new ExpressAdapter(expressInstance),
+  );
+
+  // Configurar CORS para permitir o frontend
+  app.enableCors({
+    origin: process.env.FRONTEND_URL || '*', // Substitua pelo domínio do seu frontend
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
+  });
+
   app.setGlobalPrefix('api');
-
-  const port = process.env.PORT || 3000;
-  await app.listen(port);
-  console.log(`App rodando na porta ${port}`);
+  await app.init();
+  return expressInstance;
 }
 
-bootstrap();
+// Exportar a função serverless para o Vercel
+export default async function handler(req: any, res: any) {
+  const server = await createNestServer(expressServer);
+  return server(req, res);
+}
