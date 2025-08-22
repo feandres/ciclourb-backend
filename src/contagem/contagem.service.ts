@@ -25,7 +25,7 @@ export class ContagemService {
         )
       ) AS geojson
       FROM public.contagem_ciclistas c;
-    `);
+    `); 
 
     return result[0].geojson;
   }
