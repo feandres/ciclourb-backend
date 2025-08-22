@@ -1,24 +1,15 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ExpressAdapter } from '@nestjs/platform-express';
-import express, { Express } from 'express';
 
-const expressServer: Express = express();
-
-async function createNestServer(expressInstance: Express) {
-  const app = await NestFactory.create(
-    AppModule,
-    new ExpressAdapter(expressInstance),
-  );
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
 
   app.enableCors();
-  app.setGlobalPrefix('api'); 
+  app.setGlobalPrefix('api');
 
-  return app.init();
+  const port = process.env.PORT || 3000;
+  await app.listen(port);
+  console.log(`App rodando na porta ${port}`);
 }
 
-// Para produção no Vercel
-createNestServer(expressServer);
-
-// Exporta o servidor express para o Vercel
-export default expressServer;
+bootstrap();
