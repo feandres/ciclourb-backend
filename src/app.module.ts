@@ -7,8 +7,10 @@ import { MalhaAtualModule } from './malha_atual/malha_atual.module';
 import { MalhaPDCIModule } from './malha_pdci/malha_pdci.module';
 import { ContagemModule } from './contagem/contagem.module';
 import { DadosModule } from './dados/dados.module';
+import { AppController } from './app.controller';
 
 @Module({
+  controllers: [AppController],
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
