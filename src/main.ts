@@ -11,22 +11,10 @@ async function createNestServer(expressInstance: Express) {
     new ExpressAdapter(expressInstance),
   );
 
-  // Teste
   app.enableCors();
   app.setGlobalPrefix('api'); 
 
   return app.init();
-}
-
-// Para desenvolvimento local
-if (process.env.NODE_ENV !== 'production') {
-  async function bootstrap() {
-    const app = await NestFactory.create(AppModule);
-    app.enableCors();
-    app.setGlobalPrefix('api'); // opcional
-    await app.listen(3000);
-  }
-  bootstrap();
 }
 
 // Para produção no Vercel
