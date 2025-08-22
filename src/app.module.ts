@@ -16,19 +16,15 @@ import { DadosModule } from './dados/dados.module';
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
         type: 'postgres',
-        host: config.get<string>('DB_HOST'),
-        port: config.get<number>('DB_PORT', 5432), // Valor padrão
-        username: config.get<string>('DB_USER'),
-        password: config.get<string>('DB_PASSWORD'),
-        database: config.get<string>('DB_NAME'),
+        url: config.get<string>('DATABASE_URL'), 
         autoLoadEntities: true,
-        synchronize: config.get<string>('NODE_ENV') !== 'production', // Evitar synchronize em produção
+        synchronize: config.get<string>('NODE_ENV') !== 'production',
         ssl: {
-          rejectUnauthorized: false, // Necessário para o Supabase
+          rejectUnauthorized: false, 
         },
-        retryAttempts: 3, // Tentativas de reconexão
-        retryDelay: 3000, // Atraso entre tentativas (ms)
-        logging: config.get<string>('NODE_ENV') !== 'production', // Ativar logs apenas em dev
+        retryAttempts: 3,
+        retryDelay: 3000,
+        logging: config.get<string>('NODE_ENV') !== 'production',
       }),
     }),
     Zonas30Module,
