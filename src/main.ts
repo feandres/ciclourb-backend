@@ -25,7 +25,26 @@ async function createNestServer(expressInstance: express.Express) {
   return expressInstance;
 }
 
-export default async function handler(req: any, res: any) {
+async function handler(req: any, res: any) {
   const server = await createNestServer(expressServer);
   return server(req, res);
 }
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule, new ExpressAdapter(expressServer));
+  app.enableCors();
+  await app.listen(3001);
+}
+
+
+let serverHandler;
+if (process.env.SERVER_ENV === "development") {
+  serverHandler = expressServer;
+  bootstrap();
+} 
+
+if (process.env.SERVER_ENV !== "development" || !process.env.SERVER_ENV) {
+  serverHandler = handler;
+}
+
+export default serverHandler;
