@@ -25,7 +25,7 @@ export class ContagemService {
         )
       ) AS geojson
       FROM public.contagem_ciclistas c;
-    `); 
+    `);
 
     return result[0].geojson;
   }
@@ -36,6 +36,9 @@ export class ContagemService {
     ano?: string,
     turno?: string,
     realizador?: string,
+    search?: string,
+    sortBy: 'data' | 'ano' | 'ciclistas_por_min' = 'data',
+    sortOrder: 'ASC' | 'DESC' = 'DESC',
   ): Promise<{ data: ContagemModel[]; total: number }> {
     const offset = (page - 1) * limit;
 
@@ -54,30 +57,34 @@ export class ContagemService {
       params.push(realizador);
       where.push(`realizador = $${params.length}`);
     }
+    if (search) {
+      params.push(`%${search}%`);
+      where.push(`local ILIKE $${params.length}`);
+    }
 
     const whereClause = where.length ? `WHERE ${where.join(' AND ')}` : '';
 
+    const orderColumn =
+      sortBy === 'ciclistas_por_min'
+        ? `CAST(REPLACE(ciclistas_por_min, ',', '.') AS NUMERIC)`
+        : sortBy;
+
     const dataQuery = `
-      SELECT
-        id, lat, lon, lat_lon, local, data, turno, inicio, fim, masculino, feminino, total, ciclistas_por_min, realizador, ano,
-        ST_AsGeoJSON(
-          ST_Transform(
-            ST_SetSRID(ST_GeometryN(geom,1), 31984),
-            4326
-          )
-        )::json AS geom
-      FROM public.contagem_ciclistas
-      ${whereClause}
-      ORDER BY data DESC
-      LIMIT $${params.length + 1}
-      OFFSET $${params.length + 2};
-    `;
+    SELECT
+      id, lat, lon, lat_lon, local, data, turno, inicio, fim, masculino, feminino, total,
+      ciclistas_por_min, realizador, ano, geom
+    FROM public.contagem_ciclistas
+    ${whereClause}
+    ORDER BY ${orderColumn} ${sortOrder}
+    LIMIT $${params.length + 1}
+    OFFSET $${params.length + 2};
+  `;
 
     const countQuery = `
-      SELECT COUNT(*) AS total
-      FROM public.contagem_ciclistas
-      ${whereClause};
-    `;
+    SELECT COUNT(*) AS total
+    FROM public.contagem_ciclistas
+    ${whereClause};
+  `;
 
     params.push(limit, offset);
 
@@ -86,8 +93,6 @@ export class ContagemService {
       this.dataSource.query(countQuery, params.slice(0, -2)),
     ]);
 
-    const total = parseInt(countResult[0]?.total ?? 0, 10);
-
-    return { data, total };
+    return { data, total: parseInt(countResult[0]?.total ?? 0, 10) };
   }
 }

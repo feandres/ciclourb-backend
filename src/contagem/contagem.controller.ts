@@ -7,22 +7,29 @@ export class ContagemController {
   constructor(private readonly contagemService: ContagemService) {}
 
   @Get()
-  async findAll(
-    @Query('page') page = '1',
-    @Query('limit') limit = '10',
+  async getContagens(
+    @Query('page') page = 1,
+    @Query('limit') limit = 10,
     @Query('ano') ano?: string,
     @Query('turno') turno?: string,
     @Query('realizador') realizador?: string,
-  ): Promise<{ data: ContagemModel[]; total: number; page: number; limit: number }> {
-    const pageNum = parseInt(page, 10);
-    const limitNum = parseInt(limit, 10);
-
-    const { data, total } = await this.contagemService.findAll(pageNum, limitNum, ano, turno, realizador);
-
-    return { data, total, page: pageNum, limit: limitNum };
+    @Query('search') search?: string,
+    @Query('sortBy') sortBy?: 'data' | 'ano' | 'ciclistas_por_min',
+    @Query('sortOrder') sortOrder?: 'ASC' | 'DESC',
+  ) {
+    return this.contagemService.findAll(
+      +page,
+      +limit,
+      ano,
+      turno,
+      realizador,
+      search,
+      sortBy,
+      sortOrder,
+    );
   }
 
-  @Get("/contagens")
+  @Get('/contagens')
   async contagensAll() {
     return this.contagemService.allContagens();
   }
