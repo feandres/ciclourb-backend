@@ -29,4 +29,32 @@ export class PontosContagemService {
   `);
     return result[0].geojson;
   }
+
+  async findAllByYear(ano: string): Promise<any> {
+    const result = await this.dataSource.query(`
+        SELECT jsonb_build_object(
+        'type', 'FeatureCollection',
+        'features', jsonb_agg(
+          jsonb_build_object(
+            'type', 'Feature',
+            'geometry', ST_AsGeoJSON(
+              ST_Transform(
+                ST_SetSRID(ST_GeometryN(p.geom, 1), 31984),
+                4326
+              )
+            )::jsonb,
+            'properties', jsonb_build_object(
+              'ano', c.ano,
+              'geom', p.geom
+            )
+          )
+        )
+    ) AS geojson
+    FROM pontos_contagem p
+    JOIN contagem_ciclistas c 
+      ON ST_Equals(p.geom, c.geom)
+    WHERE c.ano = '${ano}';
+  `);
+    return result[0].geojson;
+  }
 }
