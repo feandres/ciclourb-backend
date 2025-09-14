@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { Field, Int } from '@nestjs/graphql';
 import { GraphQLJSONObject } from 'graphql-type-json';
 
 export class MalhaComparativaModel {

@@ -95,4 +95,29 @@ export class ContagemService {
 
     return { data, total: parseInt(countResult[0]?.total ?? 0, 10) };
   }
+
+  async findByPontoContagem(point: string): Promise<any> {
+    const result = await this.dataSource.query(`
+      SELECT jsonb_build_object(
+        'type', 'FeatureCollection',
+        'features', jsonb_agg(
+          jsonb_build_object(
+            'type', 'Feature',
+            'geometry', ST_AsGeoJSON(
+              ST_Transform(
+                -- Converte MultiPoint em Point
+                ST_SetSRID(ST_GeometryN(geom, 1), 31984),
+                4326
+              )
+            )::jsonb,
+            'properties', to_jsonb(c) - 'geom'
+          )
+        )
+      ) AS geojson
+    FROM public.contagem_ciclistas c
+    WHERE ST_Equals(geom, ST_GeomFromText('${point}', 0));
+    `);
+
+    return result[0].geojson;
+  }
 }

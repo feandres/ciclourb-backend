@@ -33,4 +33,11 @@ export class ContagemController {
   async contagensAll() {
     return this.contagemService.allContagens();
   }
+
+  @Get('byPontoContagem')
+  async byPontoContagem(
+    @Query('point') point: string
+  ) {
+    return this.contagemService.findByPontoContagem(point);
+  }
 }

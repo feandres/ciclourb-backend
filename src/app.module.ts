@@ -8,6 +8,7 @@ import { MalhaPDCIModule } from './malha_pdci/malha_pdci.module';
 import { ContagemModule } from './contagem/contagem.module';
 import { DadosModule } from './dados/dados.module';
 import { MalhaComparativaModule } from './malha_comparativa/malha_comparativa.module';
+import { PontosContagemModule } from './pontos_contagem/pontos_contagem.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { MalhaComparativaModule } from './malha_comparativa/malha_comparativa.mo
     ContagemModule,
     DadosModule,
     MalhaComparativaModule,
+    PontosContagemModule,
   ],
 })
 export class AppModule {}
