@@ -21,9 +21,7 @@ import { PontosContagemModule } from './pontos_contagem/pontos_contagem.module';
         url: config.get<string>('DATABASE_URL'), 
         autoLoadEntities: true,
         synchronize: config.get<string>('NODE_ENV') !== 'production',
-        ssl: {
-          rejectUnauthorized: false, 
-        },
+        ssl: false,
         retryAttempts: 3,
         retryDelay: 3000,
         logging: config.get<string>('NODE_ENV') !== 'production',
